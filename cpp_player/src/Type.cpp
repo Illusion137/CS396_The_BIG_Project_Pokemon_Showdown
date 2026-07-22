@@ -21,6 +21,7 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 1.0;
                 case Type::STEEL: return 0.5;
                 case Type::WATER: return 1.0;
+                case Type::NONE: return 1.0;
             }
         }
         case Type::DARK: {
@@ -42,6 +43,7 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 1.0;
                 case Type::STEEL: return 0.5;
                 case Type::WATER: return 1.0;
+                case Type::NONE: return 1.0;
             }
         }
         case Type::DRAGON: {
@@ -63,6 +65,7 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 1.0;
                 case Type::STEEL: return 0.5;
                 case Type::WATER: return 1.0;
+                case Type::NONE: return 1.0;
             }
         }
         case Type::ELECTRIC: {
@@ -84,6 +87,7 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 1.0;
                 case Type::STEEL: return 1.0;
                 case Type::WATER: return 2.0;
+                case Type::NONE: return 1.0;
             }
         }
         case Type::FIGHTING: {
@@ -105,6 +109,7 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 2.0;
                 case Type::STEEL: return 2.0;
                 case Type::WATER: return 1.0;
+                case Type::NONE: return 1.0;
             }
         }
         case Type::FIRE: {
@@ -126,6 +131,7 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 0.5;
                 case Type::STEEL: return 2.0;
                 case Type::WATER: return 0.5;
+                case Type::NONE: return 1.0;
             }
         }
         case Type::FLYING: {
@@ -147,6 +153,7 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 0.5;
                 case Type::STEEL: return 0.5;
                 case Type::WATER: return 1.0;
+                case Type::NONE: return 1.0;
             }
         }
         case Type::GHOST: {
@@ -168,6 +175,7 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 1.0;
                 case Type::STEEL: return 0.5;
                 case Type::WATER: return 1.0;
+                case Type::NONE: return 1.0;
             }
         }
         case Type::GRASS: {
@@ -189,6 +197,7 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 2.0;
                 case Type::STEEL: return 0.5;
                 case Type::WATER: return 2.0;
+                case Type::NONE: return 1.0;
             }
         }
         case Type::GROUND: {
@@ -210,6 +219,7 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 2.0;
                 case Type::STEEL: return 2.0;
                 case Type::WATER: return 1.0;
+                case Type::NONE: return 1.0;
             }
         }
         case Type::ICE: {
@@ -231,6 +241,7 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 1.0;
                 case Type::STEEL: return 0.5;
                 case Type::WATER: return 0.5;
+                case Type::NONE: return 1.0;
             }
         }
         case Type::NORMAL: {
@@ -252,6 +263,7 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 0.5;
                 case Type::STEEL: return 0.5;
                 case Type::WATER: return 1.0;
+                case Type::NONE: return 1.0;
             }
         }
         case Type::POISON: {
@@ -273,6 +285,7 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 0.5;
                 case Type::STEEL: return 0.0;
                 case Type::WATER: return 1.0;
+                case Type::NONE: return 1.0;
             }
         }
         case Type::PSYCHIC: {
@@ -294,6 +307,7 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 1.0;
                 case Type::STEEL: return 0.5;
                 case Type::WATER: return 1.0;
+                case Type::NONE: return 1.0;
             }
         }
         case Type::ROCK: {
@@ -315,6 +329,7 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 1.0;
                 case Type::STEEL: return 0.5;
                 case Type::WATER: return 1.0;
+                case Type::NONE: return 1.0;
             }
         }
         case Type::STEEL: {
@@ -336,6 +351,7 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 2.0;
                 case Type::STEEL: return 0.5;
                 case Type::WATER: return 0.5;
+                case Type::NONE: return 1.0;
             }
         }
         case Type::WATER: {
@@ -357,8 +373,10 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
                 case Type::ROCK: return 2.0;
                 case Type::STEEL: return 1.0;
                 case Type::WATER: return 0.5;
+                case Type::NONE: return 1.0;
             }
         }
+        case Type::NONE: return 1.0;
     }
     return 1.0;
 }

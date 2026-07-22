@@ -2,6 +2,7 @@
 #define TYPE_H
 
 enum class Type {
+    NONE,
     BUG,
     DARK,
     DRAGON,

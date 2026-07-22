@@ -57,9 +57,52 @@ async function populate_extracted_pokemon_data(){
     }
 }
 
+function type_string_to_cpp_type(type_string: string|undefined){
+    switch(type_string){
+        case "Bug": return "Type::BUG";
+        case "Dark": return "Type::DARK";
+        case "Dragon": return "Type::DRAGON";
+        case "Electric": return "Type::ELECTRIC";
+        case "Fighting": return "Type::FIGHTING";
+        case "Fire": return "Type::FIRE";
+        case "Flying": return "Type::FLYING";
+        case "Ghost": return "Type::GHOST";
+        case "Grass": return "Type::GRASS";
+        case "Ground": return "Type::GROUND";
+        case "Ice": return "Type::ICE";
+        case "Normal": return "Type::NORMAL";
+        case "Poison": return "Type::POISON";
+        case "Psychic": return "Type::PSYCHIC";
+        case "Rock": return "Type::ROCK";
+        case "Steel": return "Type::STEEL";
+        case "Water": return "Type::WATER";
+        default: return "Type::NONE";
+    }
+}
+
+async function generate_pokemon_gen_cpp(){
+    const pokemon_to_map = (pokemon: typeof pokemon_dump['pokemon'][0]) =>
+        `    {"${pokemon.name}", BasePokemon("${pokemon.name}", {${type_string_to_cpp_type(pokemon.types[0])}, ${type_string_to_cpp_type(pokemon.types[1])}}, {${pokemon.hp}, ${pokemon.atk}, ${pokemon.def}, ${pokemon.spa}, ${pokemon.spd}, ${pokemon.spe}}, ${pokemon.weight})}`;
+
+    const pokemon_entries = pokemon_dump.pokemon
+        .filter(pokemon => pokemon.isNonstandard === "Standard")
+        .map(pokemon_to_map)
+        .join(",\n");
+
+    const template =
+`#include "../Pokemon.h"
+
+std::unordered_map<std::string, BasePokemon> name_to_pokemon_map = {
+${pokemon_entries}
+};
+`;
+    await fs().write_file_as_string("../cpp_player/src/gen/PokemonGen.cpp", template, {encoding: "utf8"});
+}
+
 async function main(){
     await load_native_fs();
     await populate_extracted_pokemon_data();
+    await generate_pokemon_gen_cpp();
 }
 
 main().catch(catch_log);
