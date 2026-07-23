@@ -16,7 +16,10 @@ private:
 };
 
 class Item {
-
+public:
+    Item(ItemBase info): info_(info) {}
+private:
+    ItemBase info_;
 };
 
 extern std::unordered_map<std::string, ItemBase> item_from_string;

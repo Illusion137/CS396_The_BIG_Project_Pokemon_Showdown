@@ -4,9 +4,9 @@
 #include <string>
 #include <unordered_map>
 
-class Ability {
+class AbilityBase {
 public:
-    Ability(const char *name, const char *description):
+    AbilityBase(const char *name, const char *description):
         name_(name), description_(description){}
     const char *name() const noexcept { return this->name_; }
     const char *description() const noexcept { return this->description_; }
@@ -15,6 +15,13 @@ private:
     const char *description_;
 };
 
-extern std::unordered_map<std::string, Ability> ability_from_string;
+class Ability {
+public:
+    Ability(AbilityBase info): info_(info) {}
+private:
+    AbilityBase info_;
+};
+
+extern std::unordered_map<std::string, AbilityBase> ability_from_string;
 
 #endif // ABILITY_H

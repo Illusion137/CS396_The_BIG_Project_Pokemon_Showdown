@@ -275,7 +275,7 @@ ${pokemon_entries}
 
 async function generate_ability_gen_cpp(){
     const ability_to_map = (ability: typeof pokemon_dump['abilities'][0]) =>
-        `    {"${ability.name}", Ability("${ability.name}", "${ability.description}")}`;
+        `    {"${ability.name}", AbilityBase("${ability.name}", "${ability.description}")}`;
 
     const ability_entries = pokemon_dump.abilities
         .filter(ability => ability.isNonstandard === "Standard")
@@ -286,11 +286,11 @@ async function generate_ability_gen_cpp(){
 `${AUTO_GENERATED_HEADER_CPP}
 #include "../Ability.h"
 
-std::unordered_map<std::string, Ability> name_to_ability_map = {
+std::unordered_map<std::string, AbilityBase> name_to_ability_map = {
 ${ability_entries}
 };
 `;
-    await fs().write_file_as_string("../cpp_player/src/gen/AbilityGen.cpp", template, {encoding: "utf8"});
+    await fs().write_file_as_string("../cpp_player/src/gen/AbilityBaseGen.cpp", template, {encoding: "utf8"});
 }
 
 async function generate_item_gen_cpp(){
@@ -310,7 +310,7 @@ std::unordered_map<std::string, ItemBase> name_to_item_map = {
 ${item_entries}
 };
 `;
-    await fs().write_file_as_string("../cpp_player/src/gen/ItemGen.cpp", template, {encoding: "utf8"});
+    await fs().write_file_as_string("../cpp_player/src/gen/ItemBaseGen.cpp", template, {encoding: "utf8"});
 }
 
 function esc(str: string){
