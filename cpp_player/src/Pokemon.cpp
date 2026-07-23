@@ -67,8 +67,13 @@ bool Pokemon::has_available_moves() const noexcept {
     }
     return false;
 }
-std::unique_ptr<Move> Pokemon::random_move() noexcept{
-    if(has_available_moves()) return create_move("Struggle");
+std::unique_ptr<Move> Pokemon::random_move() noexcept {
+    if(!this->has_available_moves()) return create_move("Struggle");
+    std::vector<Move*> eligible_moves;
+    for(const auto &move : this->moves()) {
+        if(move && move->pp()) eligible_moves.push_back(move.get());
+    }
+    return create_move(eligible_moves[std::rand() % eligible_moves.size()]->info().name());
 }
 
 void Pokemon::take_damage(std::int32_t damage) noexcept {

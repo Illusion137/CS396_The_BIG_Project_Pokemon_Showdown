@@ -120,7 +120,7 @@ void Game::render_frame() {
         const auto &move = player_active->moves()[i];
         if(!move) continue;
         if(!moves_line.empty()) moves_line += ' ';
-        if(i == selected_move_index_) {
+        if(i == selected_move_index_ && on_move_line_) {
             moves_line += std::format("[{}]", move->info().name());
             selected_move = move.get();
         } else {
@@ -140,7 +140,7 @@ void Game::render_frame() {
     for(auto &teammate : this->player_.get_team()) {
         if(!teammate || teammate.get() == player_active.get()) continue;
         if(!switch_line.empty()) switch_line += ' ';
-        if(switch_slot == selected_switch_index_) {
+        if(switch_slot == selected_switch_index_ && !on_move_line_) {
             switch_line += std::format("[{}]", teammate->name());
             selected_switch_target = teammate.get();
         } else {
@@ -155,14 +155,26 @@ void Game::render_frame() {
 }
 
 void Game::simulate_turn() {
-    
+
+}
+
+bool Game::game_over() {
+    const auto team_wiped = [](Player &player) {
+        for(const auto &pokemon : player.get_team()) {
+            if(pokemon && pokemon->alive()) return false;
+        }
+        return true;
+    };
+    return team_wiped(this->player_) || team_wiped(this->opponent_);
 }
 
 void Game::start() {
     while(!this->game_over()) {
         cls();
+        this->render_frame();
         const char input = getch();
-        if(input == GETCH_ENTER) {
+        if(input == 'q') return;
+        else if(input == GETCH_ENTER) {
             if(on_move_line_) {
                 if(player_.get_active_pokemon()->moves()[selected_move_index_]->pp()) {
                     // play
@@ -183,19 +195,18 @@ void Game::start() {
                     break;
                 case 'a': case 'A':
                     if(on_move_line_) selected_move_index_ = (player_.get_active_pokemon()->moves_count() + selected_move_index_ - 1) % player_.get_active_pokemon()->moves_count(); 
-                    else selected_switch_index_ = (player_.get_team_count() + selected_switch_index_ - 1) % player_.get_team_count();
-                    break;
-                case 's': case 'S':
-                    if(on_move_line_) selected_move_index_ = (selected_move_index_ + 1) % player_.get_active_pokemon()->moves_count();
-                    else selected_switch_index_ = (selected_switch_index_ + 1) % player_.get_team_count();
+                    else selected_switch_index_ = (player_.get_team_count() - 1 + selected_switch_index_ - 1) % (player_.get_team_count() - 1);
                     break;
                 case 'd': case 'D':
+                    if(on_move_line_) selected_move_index_ = (selected_move_index_ + 1) % player_.get_active_pokemon()->moves_count();
+                    else selected_switch_index_ = (selected_switch_index_ + 1) % (player_.get_team_count() - 1);
+                    break;
+                case 's': case 'S':
                     on_move_line_ = !on_move_line_;
                     selected_move_index_ = 0;
                     selected_switch_index_ = 0;
                     break;
             }
         }
-        this->render_frame();
     }
 }
