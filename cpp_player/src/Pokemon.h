@@ -133,7 +133,7 @@ public:
 
     NonVolitileStatus &status() const noexcept;
     NonVolitileStatusCondition status_condition() const noexcept;
-    void try_update_status(NonVolitileStatusCondition new_status) noexcept;
+    void try_update_status(std::unique_ptr<NonVolitileStatus> new_status) noexcept;
     void cure_status() noexcept;
     bool status_blocks_move() noexcept;
     void apply_end_of_turn_status() noexcept;

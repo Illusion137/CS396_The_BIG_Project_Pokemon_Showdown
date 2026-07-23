@@ -2,6 +2,7 @@
 #include "gen/MoveGen.h"
 #include <algorithm>
 #include <cstdlib>
+#include <memory>
 #include <vector>
 
 StatSpread::StatSpread(nlohmann::json j) {
@@ -166,9 +167,9 @@ std::int32_t Pokemon::speed_stage() const noexcept { return this->speed_plus_; }
 
 NonVolitileStatus &Pokemon::status() const noexcept { return *this->non_volitile_status_; }
 NonVolitileStatusCondition Pokemon::status_condition() const noexcept { return this->status().get_condition(); }
-void Pokemon::try_update_status(NonVolitileStatusCondition new_status) noexcept {
+void Pokemon::try_update_status(std::unique_ptr<NonVolitileStatus> new_status) noexcept {
     if(this->status_condition() != NonVolitileStatusCondition::NONE) return;
-    this->non_volitile_status_ = std::make_unique<NonVolitileStatus>(std::move(new_status));
+    this->non_volitile_status_ = std::move(new_status);
 }
 void Pokemon::cure_status() noexcept { this->non_volitile_status_ = std::make_unique<NonVolitileStatus>(NonVolitileStatusCondition::NONE); }
 bool Pokemon::status_blocks_move() noexcept { return this->non_volitile_status_->blocks_move(*this); }
