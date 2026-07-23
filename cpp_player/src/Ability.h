@@ -1,6 +1,9 @@
 #ifndef ABILITY_H
 #define ABILITY_H
 
+#include <string>
+#include <unordered_map>
+
 class Ability {
 public:
     Ability(const char *name, const char *description):
@@ -11,5 +14,7 @@ private:
     const char *name_;
     const char *description_;
 };
+
+extern std::unordered_map<std::string, Ability> ability_from_string;
 
 #endif // ABILITY_H

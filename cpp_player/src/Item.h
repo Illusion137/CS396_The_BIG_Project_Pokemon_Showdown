@@ -1,6 +1,9 @@
 #ifndef ITEM_H
 #define ITEM_H
 
+#include <string>
+#include <unordered_map>
+
 class ItemBase {
 public:
     ItemBase(const char *name, const char *description):
@@ -15,5 +18,7 @@ private:
 class Item {
 
 };
+
+extern std::unordered_map<std::string, ItemBase> item_from_string;
 
 #endif // ITEM_H
