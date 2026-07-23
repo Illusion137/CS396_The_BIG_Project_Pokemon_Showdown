@@ -39,5 +39,6 @@ constexpr std::int32_t NATURE_SP_DEF_MASK = 0b00010;
 constexpr std::int32_t NATURE_SPEED_MASK = 0b00001;
 
 extern std::unordered_map<std::string, Nature> nature_from_string;
+extern double nature_stat_multiplier(Nature nature, std::int32_t stat_mask) noexcept;
 
 #endif // NATURE_H
