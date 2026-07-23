@@ -2,9 +2,11 @@
 #include "Orchestrator.h"
 #include <cstdint>
 #include <cstdlib>
+#include <ctime>
 #include <print>
 
 std::int32_t main(std::int32_t argc, char **argv) {
+    std::srand(static_cast<unsigned>(std::time(nullptr)));
     if(argc != 3) { // 3 because of the default first arg
         std::println("Expected 2 input args: -- player_file.showdown opponent_file.showdown");
         return EXIT_FAILURE;
