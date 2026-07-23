@@ -1,23 +1,7 @@
+// AUTO GENERATED DO NOT MODIFY
 #include "../Pokemon.h"
 
 std::unordered_map<std::string, BasePokemon> name_to_pokemon_map = {
-    {"Pokestar Smeargle", BasePokemon("Pokestar Smeargle", {Type::NORMAL, Type::NONE}, {55, 20, 35, 20, 45, 75}, 61)},
-    {"Pokestar UFO", BasePokemon("Pokestar UFO", {Type::FLYING, Type::ELECTRIC}, {100, 100, 100, 100, 100, 100}, 61)},
-    {"Pokestar UFO-2", BasePokemon("Pokestar UFO-2", {Type::PSYCHIC, Type::ELECTRIC}, {100, 100, 100, 100, 100, 100}, 61)},
-    {"Pokestar UFO-PropU2", BasePokemon("Pokestar UFO-PropU2", {Type::PSYCHIC, Type::ELECTRIC}, {100, 100, 100, 100, 100, 100}, 61)},
-    {"Pokestar Brycen-Man", BasePokemon("Pokestar Brycen-Man", {Type::DARK, Type::PSYCHIC}, {100, 100, 100, 100, 100, 100}, 61)},
-    {"Pokestar MT", BasePokemon("Pokestar MT", {Type::STEEL, Type::NONE}, {100, 100, 100, 100, 100, 100}, 61)},
-    {"Pokestar MT2", BasePokemon("Pokestar MT2", {Type::STEEL, Type::ELECTRIC}, {100, 100, 100, 100, 100, 100}, 61)},
-    {"Pokestar Transport", BasePokemon("Pokestar Transport", {Type::STEEL, Type::NONE}, {100, 100, 100, 100, 100, 100}, 61)},
-    {"Pokestar Giant", BasePokemon("Pokestar Giant", {Type::NORMAL, Type::NONE}, {100, 100, 100, 100, 100, 100}, 61)},
-    {"Pokestar Humanoid", BasePokemon("Pokestar Humanoid", {Type::NORMAL, Type::NONE}, {100, 100, 100, 100, 100, 100}, 61)},
-    {"Pokestar Monster", BasePokemon("Pokestar Monster", {Type::DARK, Type::NONE}, {100, 100, 100, 100, 100, 100}, 61)},
-    {"Pokestar F-00", BasePokemon("Pokestar F-00", {Type::STEEL, Type::NORMAL}, {100, 100, 100, 100, 100, 100}, 61)},
-    {"Pokestar F-002", BasePokemon("Pokestar F-002", {Type::STEEL, Type::NORMAL}, {100, 100, 100, 100, 100, 100}, 61)},
-    {"Pokestar Spirit", BasePokemon("Pokestar Spirit", {Type::DARK, Type::GHOST}, {100, 100, 100, 100, 100, 100}, 61)},
-    {"Pokestar Black Door", BasePokemon("Pokestar Black Door", {Type::GRASS, Type::NONE}, {100, 100, 100, 100, 100, 100}, 61)},
-    {"Pokestar White Door", BasePokemon("Pokestar White Door", {Type::FIRE, Type::NONE}, {100, 100, 100, 100, 100, 100}, 61)},
-    {"Pokestar Black Belt", BasePokemon("Pokestar Black Belt", {Type::FIGHTING, Type::NONE}, {100, 100, 100, 100, 100, 100}, 61)},
     {"Bulbasaur", BasePokemon("Bulbasaur", {Type::GRASS, Type::POISON}, {45, 49, 49, 65, 65, 45}, 6.9)},
     {"Caterpie", BasePokemon("Caterpie", {Type::BUG, Type::NONE}, {45, 30, 35, 20, 20, 45}, 2.9)},
     {"Voltorb", BasePokemon("Voltorb", {Type::ELECTRIC, Type::NONE}, {40, 30, 50, 55, 55, 100}, 10.4)},
@@ -705,11 +689,5 @@ std::unordered_map<std::string, BasePokemon> name_to_pokemon_map = {
     {"Drowzee", BasePokemon("Drowzee", {Type::PSYCHIC, Type::NONE}, {60, 48, 45, 43, 90, 42}, 32.4)},
     {"Hypno", BasePokemon("Hypno", {Type::PSYCHIC, Type::NONE}, {85, 73, 70, 73, 115, 67}, 75.6)},
     {"Krabby", BasePokemon("Krabby", {Type::WATER, Type::NONE}, {30, 105, 90, 25, 25, 50}, 6.5)},
-    {"Kingler", BasePokemon("Kingler", {Type::WATER, Type::NONE}, {55, 130, 115, 50, 50, 75}, 60)},
-    {"Castform-Sunny", BasePokemon("Castform-Sunny", {Type::FIRE, Type::NONE}, {70, 70, 70, 70, 70, 70}, 0.8)},
-    {"Meloetta-Pirouette", BasePokemon("Meloetta-Pirouette", {Type::NORMAL, Type::FIGHTING}, {100, 128, 90, 77, 77, 128}, 6.5)},
-    {"Darmanitan-Zen", BasePokemon("Darmanitan-Zen", {Type::FIRE, Type::PSYCHIC}, {105, 30, 105, 140, 105, 55}, 92.9)},
-    {"Castform-Rainy", BasePokemon("Castform-Rainy", {Type::WATER, Type::NONE}, {70, 70, 70, 70, 70, 70}, 0.8)},
-    {"Cherrim-Sunshine", BasePokemon("Cherrim-Sunshine", {Type::GRASS, Type::NONE}, {70, 60, 70, 87, 78, 85}, 9.3)},
-    {"Castform-Snowy", BasePokemon("Castform-Snowy", {Type::ICE, Type::NONE}, {70, 70, 70, 70, 70, 70}, 0.8)}
+    {"Kingler", BasePokemon("Kingler", {Type::WATER, Type::NONE}, {55, 130, 115, 50, 50, 75}, 60)}
 };

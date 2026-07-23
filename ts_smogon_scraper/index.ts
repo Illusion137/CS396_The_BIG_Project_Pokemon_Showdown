@@ -163,6 +163,96 @@ ${move_entries}
     await fs().write_file_as_string("../cpp_player/src/gen/MoveBaseGen.cpp", template, {encoding: "utf8"});
 }
 
+type MoveHook = "effect" | "power" | "defending_stat" | "effective_priority";
+
+// I really wish that this could type system could work :(
+const MOVE_OVERRIDES: Record<typeof pokemon_dump['moves'][number]['name'], MoveHook[]> = {
+    "Acid Armor": ["effect"],
+    "Low Kick": ["power"],
+    "Grass Knot": ["power"],
+    "Pursuit": ["power", "effective_priority"],
+    "Psyshock": ["defending_stat"],
+    "Crunch": ["effect"],
+    "Iron Head": ["effect"],
+    "Swords Dance": ["effect"],
+    "Rapid Spin": ["effect"],
+    "Outrage": ["effect"],
+    "U-turn": ["effect"],
+    "Recover": ["effect"],
+    "Ice Beam": ["effect"],
+    "Fire Blast": ["effect"],
+    "Draco Meteor": ["effect"],
+    "Calm Mind": ["effect"],
+    "Roost": ["effect"],
+    "Stealth Rock": ["effect"],
+    "Roar": ["effect"],
+    "Lava Plume": ["effect"],
+    "Toxic": ["effect"],
+    "Taunt": ["effect"],
+    "Hurricane": ["effect"],
+    "Superpower": ["effect"],
+    "Rest": ["effect"],
+    "Scald": ["effect"],
+    "Sleep Talk": ["effect"],
+    "Spikes": ["effect"],
+    "Dark Pulse": ["effect"],
+    "Focus Blast": ["effect"],
+};
+
+function move_name_to_class_name(move_name: string){
+    return move_name.split(/[^a-zA-Z0-9]+/)
+        .filter(Boolean)
+        .map(word => word[0].toUpperCase() + word.slice(1))
+        .join("");
+}
+
+function move_hook_to_cpp_override(hook: MoveHook){
+    switch(hook){
+        case "effect": return "void effect(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player) override;";
+        case "power": return "std::int32_t power(const Pokemon &user, const Pokemon &target) const noexcept override;";
+        case "defending_stat": return "std::int32_t defending_stat(const Pokemon &target) const noexcept override;";
+        case "effective_priority": return "std::int32_t effective_priority(const Pokemon &user, const Pokemon &target) const noexcept override;";
+    }
+}
+
+async function generate_move_gen_h_and_cpp(){
+    const move_names = Object.keys(MOVE_OVERRIDES);
+
+    const class_declarations = move_names.map(move_name => {
+        const class_name = move_name_to_class_name(move_name);
+        const overrides = MOVE_OVERRIDES[move_name].map(move_hook_to_cpp_override).join(" ");
+        return `class Move_${class_name} : public Move { public: using Move::Move; ${overrides} };`;
+    }).join("\n");
+
+    const header_template =
+`${AUTO_GENERATED_HEADER_CPP}
+#include "../Move.h"
+#include <memory>
+#include <string>
+
+${class_declarations}
+
+extern std::unique_ptr<Move> create_move(const std::string &name);
+`;
+    await fs().write_file_as_string("../cpp_player/src/gen/MoveGen.h", header_template, {encoding: "utf8"});
+
+    const dispatch_entries = move_names
+        .map(move_name => `    if(name == "${esc(move_name)}") return std::make_unique<Move_${move_name_to_class_name(move_name)}>(info);`)
+        .join("\n");
+
+    const cpp_template =
+`${AUTO_GENERATED_HEADER_CPP}
+#include "MoveGen.h"
+
+std::unique_ptr<Move> create_move(const std::string &name) {
+    const MoveBase &info = name_to_move_map.at(name);
+${dispatch_entries}
+    return std::make_unique<Move>(info);
+}
+`;
+    await fs().write_file_as_string("../cpp_player/src/gen/MoveGen.cpp", cpp_template, {encoding: "utf8"});
+}
+
 async function generate_pokemon_gen_cpp(){
     const pokemon_to_map = (pokemon: typeof pokemon_dump['pokemon'][0]) =>
         `    {"${pokemon.name}", BasePokemon("${pokemon.name}", {${type_string_to_cpp_type(pokemon.types[0])}, ${type_string_to_cpp_type(pokemon.types[1])}}, {${pokemon.hp}, ${pokemon.atk}, ${pokemon.def}, ${pokemon.spa}, ${pokemon.spd}, ${pokemon.spe}}, ${pokemon.weight})}`;
@@ -181,6 +271,46 @@ ${pokemon_entries}
 };
 `;
     await fs().write_file_as_string("../cpp_player/src/gen/PokemonGen.cpp", template, {encoding: "utf8"});
+}
+
+async function generate_ability_gen_cpp(){
+    const ability_to_map = (ability: typeof pokemon_dump['abilities'][0]) =>
+        `    {"${ability.name}", Ability("${ability.name}", "${ability.description}")}`;
+
+    const ability_entries = pokemon_dump.abilities
+        .filter(ability => ability.isNonstandard === "Standard")
+        .map(ability_to_map)
+        .join(",\n");
+
+    const template =
+`${AUTO_GENERATED_HEADER_CPP}
+#include "../Ability.h"
+
+std::unordered_map<std::string, Ability> name_to_ability_map = {
+${ability_entries}
+};
+`;
+    await fs().write_file_as_string("../cpp_player/src/gen/AbilityGen.cpp", template, {encoding: "utf8"});
+}
+
+async function generate_item_gen_cpp(){
+    const item_to_map = (item: typeof pokemon_dump['items'][0]) =>
+        `    {"${item.name}", ItemBase("${item.name}", "${item.description}")}`;
+
+    const item_entries = pokemon_dump.items
+        .filter(item => item.isNonstandard === "Standard")
+        .map(item_to_map)
+        .join(",\n");
+
+    const template =
+`${AUTO_GENERATED_HEADER_CPP}
+#include "../Item.h"
+
+std::unordered_map<std::string, ItemBase> name_to_item_map = {
+${item_entries}
+};
+`;
+    await fs().write_file_as_string("../cpp_player/src/gen/ItemGen.cpp", template, {encoding: "utf8"});
 }
 
 function esc(str: string){
@@ -231,6 +361,9 @@ async function main(){
     await populate_extracted_pokemon_data();
     await generate_pokemon_gen_cpp();
     await generate_move_gen_cpp();
+    await generate_move_gen_h_and_cpp();
+    await generate_ability_gen_cpp();
+    await generate_item_gen_cpp();
 
     await generate_prolog_database();
 }
