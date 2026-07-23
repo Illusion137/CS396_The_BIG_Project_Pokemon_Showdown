@@ -197,6 +197,7 @@ const MOVE_OVERRIDES: Record<typeof pokemon_dump['moves'][number]['name'], MoveH
     "Spikes": ["effect"],
     "Dark Pulse": ["effect"],
     "Focus Blast": ["effect"],
+    "Struggle": ["effect"]
 };
 
 function move_name_to_class_name(move_name: string){
@@ -226,6 +227,8 @@ async function generate_move_gen_h_and_cpp(){
 
     const header_template =
 `${AUTO_GENERATED_HEADER_CPP}
+#ifndef MOVE_GEN_H
+#define MOVE_GEN_H
 #include "../Move.h"
 #include <memory>
 #include <string>
@@ -233,6 +236,7 @@ async function generate_move_gen_h_and_cpp(){
 ${class_declarations}
 
 extern std::unique_ptr<Move> create_move(const std::string &name);
+#endif // MOVE_GEN_H
 `;
     await fs().write_file_as_string("../cpp_player/src/gen/MoveGen.h", header_template, {encoding: "utf8"});
 

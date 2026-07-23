@@ -1,4 +1,6 @@
 // AUTO GENERATED DO NOT MODIFY
+#ifndef MOVE_GEN_H
+#define MOVE_GEN_H
 #include "../Move.h"
 #include <memory>
 #include <string>
@@ -33,5 +35,7 @@ class Move_SleepTalk : public Move { public: using Move::Move; void effect(Pokem
 class Move_Spikes : public Move { public: using Move::Move; void effect(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player) override; };
 class Move_DarkPulse : public Move { public: using Move::Move; void effect(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player) override; };
 class Move_FocusBlast : public Move { public: using Move::Move; void effect(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player) override; };
+class Move_Struggle : public Move { public: using Move::Move; void effect(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player) override; };
 
 extern std::unique_ptr<Move> create_move(const std::string &name);
+#endif // MOVE_GEN_H

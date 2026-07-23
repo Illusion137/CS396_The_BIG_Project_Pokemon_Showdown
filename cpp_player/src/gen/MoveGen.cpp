@@ -33,5 +33,6 @@ std::unique_ptr<Move> create_move(const std::string &name) {
     if(name == "Spikes") return std::make_unique<Move_Spikes>(info);
     if(name == "Dark Pulse") return std::make_unique<Move_DarkPulse>(info);
     if(name == "Focus Blast") return std::make_unique<Move_FocusBlast>(info);
+    if(name == "Struggle") return std::make_unique<Move_Struggle>(info);
     return std::make_unique<Move>(info);
 }
