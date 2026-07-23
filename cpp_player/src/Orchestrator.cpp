@@ -61,7 +61,7 @@ std::pair<PokemonTeam, PokemonTeam> fetch_pokemon_teams(const std::string& playe
     std::ifstream player_json_file(validation_player_json_path);
     nlohmann::json player_json = nlohmann::json::parse(player_json_file);
 
-    std::ifstream opponent_json_file(validation_player_json_path);
+    std::ifstream opponent_json_file(validation_opponent_json_path);
     nlohmann::json opponent_json = nlohmann::json::parse(opponent_json_file);
 
     PokemonTeam player_team = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
