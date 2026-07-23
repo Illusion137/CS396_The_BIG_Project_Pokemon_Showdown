@@ -290,7 +290,7 @@ async function generate_ability_gen_cpp(){
 `${AUTO_GENERATED_HEADER_CPP}
 #include "../Ability.h"
 
-std::unordered_map<std::string, AbilityBase> name_to_ability_map = {
+std::unordered_map<std::string, AbilityBase> ability_from_string = {
 ${ability_entries}
 };
 `;
@@ -310,7 +310,7 @@ async function generate_item_gen_cpp(){
 `${AUTO_GENERATED_HEADER_CPP}
 #include "../Item.h"
 
-std::unordered_map<std::string, ItemBase> name_to_item_map = {
+std::unordered_map<std::string, ItemBase> item_from_string = {
 ${item_entries}
 };
 `;

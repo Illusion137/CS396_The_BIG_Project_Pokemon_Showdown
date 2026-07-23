@@ -1,7 +1,7 @@
 // AUTO GENERATED DO NOT MODIFY
 #include "../Ability.h"
 
-std::unordered_map<std::string, AbilityBase> name_to_ability_map = {
+std::unordered_map<std::string, AbilityBase> ability_from_string = {
     {"Adaptability", AbilityBase("Adaptability", "This Pokemon's same-type attack bonus (STAB) is 2 instead of 1.5.")},
     {"Aftermath", AbilityBase("Aftermath", "If this Pokemon is KOed with a contact move, that move's user loses 1/4 its max HP.")},
     {"Air Lock", AbilityBase("Air Lock", "While this Pokemon is active, the effects of weather conditions are disabled.")},

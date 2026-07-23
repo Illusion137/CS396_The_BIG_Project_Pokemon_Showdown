@@ -1,7 +1,7 @@
 // AUTO GENERATED DO NOT MODIFY
 #include "../Item.h"
 
-std::unordered_map<std::string, ItemBase> name_to_item_map = {
+std::unordered_map<std::string, ItemBase> item_from_string = {
     {"Absorb Bulb", ItemBase("Absorb Bulb", "Raises holder's Sp. Atk by 1 stage if hit by a Water-type attack. Single use.")},
     {"Adamant Orb", ItemBase("Adamant Orb", "If held by a Dialga, its Steel- and Dragon-type attacks have 1.2x power.")},
     {"Aguav Berry", ItemBase("Aguav Berry", "Restores 1/8 max HP at 1/2 max HP or less; confuses if -SpD Nature. Single use.")},
