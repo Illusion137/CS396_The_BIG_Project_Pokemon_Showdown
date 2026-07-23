@@ -1,5 +1,11 @@
 # CS 396 - The BIG Project - Pokemon Showdown
 
+## Requirements
+- Racket
+- Prolog
+- g++
+- CMake
+
 ## Usage Example (Individual)
 ### Scheme Parser (Racket)
 ```bash
@@ -18,3 +24,6 @@ cmake -S cpp_player -B cpp_player/build -G Ninja -DCMAKE_CXX_COMPILER=g++
 cmake --build cpp_player/build
 ./cpp_player/build/Showdown_Player.exe ./teams/player.showdown ./teams/opponent.showdown
 ```
+
+## How to play
+Use `WASD` to move around the `cursor` and press `ENTER` to select your action.

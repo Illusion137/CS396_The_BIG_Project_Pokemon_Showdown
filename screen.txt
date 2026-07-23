@@ -1,8 +1,6 @@
-TERRAIN: [RAIN, TRICK-ROOM]                                    | The opposing Volbeat used [Thunder Wave]!
-                Volbeat L75                                    | 
-                100% [====================]                    |
-                [1.5x Atk]        
-                                                               |
+                Volbeat L75                
+                100% [====================]
+                [1.5x Atk]
 Hawlucha L100
 [====================] 100%
 [PAR][2x Atk]
