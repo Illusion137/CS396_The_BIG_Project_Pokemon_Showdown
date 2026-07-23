@@ -20,12 +20,12 @@ std::int32_t calculate_stat_plus(const std::int32_t stat, const std::int32_t sta
     return stat;
 }
 std::int32_t calculate_stat_initial_pass(std::int32_t base_stat, std::int32_t stat_iv, std::int32_t stat_ev, std::int32_t level) {
-    double top = 2 * base_stat + stat_iv + std::floor(0.25 * stat_ev) * level;
+    double top = (2 * base_stat + stat_iv + std::floor(0.25 * stat_ev)) * level;
     return std::floor(top / 100.0);
 }
-std::int32_t calculate_stat(std::int32_t base_stat, std::int32_t stat_iv, std::int32_t stat_ev, std::int32_t level, Nature nature) {
-    double top = 2 * base_stat + stat_iv + std::floor(0.25 * stat_ev) * level;
-    return std::floor(top / 100.0);
+std::int32_t calculate_stat(std::int32_t base_stat, std::int32_t stat_iv, std::int32_t stat_ev, std::int32_t level, Nature nature, std::int32_t stat_mask) {
+    const std::int32_t base = calculate_stat_initial_pass(base_stat, stat_iv, stat_ev, level) + 5;
+    return std::floor(base * nature_stat_multiplier(nature, stat_mask));
 }
 
 std::string Pokemon::name() const noexcept { return this->base_pokemon_.name(); }
@@ -37,21 +37,21 @@ bool Pokemon::alive() const noexcept { return this->current_hp_ > 0; }
 std::int32_t Pokemon::level() const noexcept { return this->level_; }
 
 std::int32_t Pokemon::attack() const noexcept {
-    const std::int32_t stat = calculate_stat_plus(calculate_stat(this->base_pokemon_.attack(), this->ivs_.attack, this->evs_.attack, this->level(), this->nature_), this->atk_plus_);
+    const std::int32_t stat = calculate_stat_plus(calculate_stat(this->base_pokemon_.attack(), this->ivs_.attack, this->evs_.attack, this->level(), this->nature_, NATURE_ATK_MASK), this->atk_plus_);
     if(this->status_condition() == NonVolitileStatusCondition::BURN) return stat * 0.5;
     return stat;
 }
 std::int32_t Pokemon::defense() const noexcept {
-    return calculate_stat_plus(calculate_stat(this->base_pokemon_.defense(), this->ivs_.defense, this->evs_.defense, this->level(), this->nature_), this->def_plus_);
+    return calculate_stat_plus(calculate_stat(this->base_pokemon_.defense(), this->ivs_.defense, this->evs_.defense, this->level(), this->nature_, NATURE_DEF_MASK), this->def_plus_);
 }
 std::int32_t Pokemon::sp_atk() const noexcept {
-    return calculate_stat_plus(calculate_stat(this->base_pokemon_.sp_atk(), this->ivs_.sp_atk, this->evs_.sp_atk, this->level(), this->nature_), this->sp_atk_plus_);
+    return calculate_stat_plus(calculate_stat(this->base_pokemon_.sp_atk(), this->ivs_.sp_atk, this->evs_.sp_atk, this->level(), this->nature_, NATURE_SP_ATK_MASK), this->sp_atk_plus_);
 }
 std::int32_t Pokemon::sp_def() const noexcept {
-    return calculate_stat_plus(calculate_stat(this->base_pokemon_.sp_def(), this->ivs_.sp_def, this->evs_.sp_def, this->level(), this->nature_), this->sp_def_plus_);
+    return calculate_stat_plus(calculate_stat(this->base_pokemon_.sp_def(), this->ivs_.sp_def, this->evs_.sp_def, this->level(), this->nature_, NATURE_SP_DEF_MASK), this->sp_def_plus_);
 }
 std::int32_t Pokemon::speed() const noexcept {
-    const std::int32_t stat = calculate_stat_plus(calculate_stat(this->base_pokemon_.speed(), this->ivs_.speed, this->evs_.speed, this->level(), this->nature_), this->speed_plus_);
+    const std::int32_t stat = calculate_stat_plus(calculate_stat(this->base_pokemon_.speed(), this->ivs_.speed, this->evs_.speed, this->level(), this->nature_, NATURE_SPEED_MASK), this->speed_plus_);
     if(this->status_condition() == NonVolitileStatusCondition::PARALYSIS) return stat * 0.5;
     return stat;
 }
