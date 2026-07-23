@@ -107,6 +107,7 @@ public:
     const MoveBase &info() const noexcept { return this->move_info_; }
     std::int32_t pp() const noexcept { return this->pp_; }
     std::int32_t get_damage(const Pokemon &user, const Pokemon &target) const noexcept;
+    std::int32_t priority(const Pokemon &user, const Pokemon &target) const noexcept { return this->effective_priority(user, target); }
     MoveUseResult use(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player, bool ignore_status = false) noexcept;
 protected:
     virtual void effect(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player) {}
@@ -115,6 +116,18 @@ protected:
     virtual std::int32_t effective_priority(const Pokemon &user, const Pokemon &target) const noexcept { return this->move_info_.priority(); }
     const MoveBase &move_info_;
     std::int32_t pp_;
+};
+
+extern const MoveBase &switch_move_base() noexcept;
+
+class Move_Switch : public Move {
+public:
+    explicit Move_Switch(Pokemon *switch_target) noexcept: Move(switch_move_base()), switch_target_(switch_target) {}
+    Pokemon *target() const noexcept { return this->switch_target_; }
+protected:
+    void effect(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player) override;
+private:
+    Pokemon *switch_target_;
 };
 
 #endif // MOVE_H

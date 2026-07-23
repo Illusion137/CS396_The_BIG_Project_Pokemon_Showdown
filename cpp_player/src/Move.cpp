@@ -15,19 +15,25 @@ std::int32_t Move::defending_stat(const Pokemon &target) const noexcept {
 std::int32_t Move::get_damage(const Pokemon &user, const Pokemon &target) const noexcept {
     if(this->move_info_.category() == MoveCategory::NON_DAMAGING) return 0;
     const std::int32_t level_part = std::floor(((2.0 * user.level()) / 5.0) + 2.0);
-    const std::int32_t power_part = this->move_info_.category() == MoveCategory::PHYSICAL ?
-        std::floor((this->power(user, target) * (user.attack() / (double)this->defending_stat(target))) / 50.0) :
-        std::floor((this->power(user, target) * (user.sp_atk() / (double)this->defending_stat(target))) / 50.0);
+    const double attacking_stat = this->move_info_.category() == MoveCategory::PHYSICAL ? user.attack() : user.sp_atk();
     constexpr std::int32_t min_damage = 2;
-    const std::int32_t base_damage = std::floor(level_part * power_part) + min_damage;
+    const std::int32_t base_damage = std::floor((level_part * this->power(user, target) * attacking_stat / this->defending_stat(target)) / 50.0) + min_damage;
     const double stab = user.types().first == this->move_info_.type() || user.types().second == this->move_info_.type() ? 1.5 : 1.0;
     const double rng = 0.85 + (double)rand() / RAND_MAX * (1.00 - 0.85);
     return (double)base_damage * stab * rng;
 }
 
+const MoveBase &switch_move_base() noexcept {
+    static const MoveBase base("Switch", "Switch to another Pokemon.", MoveCategory::NON_DAMAGING, 1, 0, 0, SWITCH_ACTION_PRIORITY, MoveTarget::SELF, Type::NONE, {});
+    return base;
+}
+void Move_Switch::effect(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player) {
+    user_player.switch_to(this->switch_target_);
+}
+
 MoveUseResult Move::use(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player, bool ignore_status) noexcept {
     if(!user.alive()) return MoveUseResult::FAILED;
-    const bool skip_status_force_sleep_talk = ignore_status || dynamic_cast<const Move_SleepTalk*>(this) != nullptr;
+    const bool skip_status_force_sleep_talk = ignore_status || dynamic_cast<const Move_SleepTalk*>(this) != nullptr || dynamic_cast<const Move_Switch*>(this) != nullptr;
     if(!skip_status_force_sleep_talk && user.status_blocks_move()) return MoveUseResult::FAILED;
     this->pp_--;
     if(this->move_info_.accuracy()) {
