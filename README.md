@@ -20,10 +20,11 @@ swipl ./prolog_validator/validator.pl -- ./.tmp/player.json ./.tmp/opponent.json
 ### Showdown Player (MAIN)
 
 ```bash
-cmake -S cpp_player -B cpp_player/build -G Ninja -DCMAKE_CXX_COMPILER=g++
+cmake -S cpp_player -B cpp_player/build -G Ninja
 cmake --build cpp_player/build
 ./cpp_player/build/Showdown_Player.exe ./teams/player.showdown ./teams/opponent.showdown
 ```
 
 ## How to play
 Use `WASD` to move around the `cursor` and press `ENTER` to select your action.
+Use `q` to exit the application.

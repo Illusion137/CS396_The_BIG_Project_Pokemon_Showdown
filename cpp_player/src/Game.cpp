@@ -1,9 +1,9 @@
 #include "Game.h"
+#include "Utils.h"
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
 #include <format>
-#include <print>
 #include <string>
 #include <vector>
 
@@ -100,20 +100,20 @@ void Game::render_frame() {
 
     const std::int32_t opponent_hp_percent = hp_percent_of(*opponent_active);
     const std::string opponent_header = std::format("{} L{}", opponent_active->name(), opponent_active->level());
-    std::println("{:>{}}{:<{}}", "", LEFT_WIDTH, opponent_header, RIGHT_FIELD_WIDTH);
-    std::println("{:>{}}{}% [{}]", "", LEFT_WIDTH, opponent_hp_percent, render_hp_bar(opponent_hp_percent));
-    std::println("{:>{}}{}", "", LEFT_WIDTH, render_status_and_boosts(*opponent_active));
+    println("{:>{}}{:<{}}", "", LEFT_WIDTH, opponent_header, RIGHT_FIELD_WIDTH);
+    println("{:>{}}{}% [{}]", "", LEFT_WIDTH, opponent_hp_percent, render_hp_bar(opponent_hp_percent));
+    println("{:>{}}{}", "", LEFT_WIDTH, render_status_and_boosts(*opponent_active));
 
     const std::int32_t player_hp_percent = hp_percent_of(*player_active);
-    std::println("{} L{}", player_active->name(), player_active->level());
-    std::println("[{}] {}%", render_hp_bar(player_hp_percent), player_hp_percent);
-    std::println("{}", render_status_and_boosts(*player_active));
+    println("{} L{}", player_active->name(), player_active->level());
+    println("[{}] {}%", render_hp_bar(player_hp_percent), player_hp_percent);
+    println("{}", render_status_and_boosts(*player_active));
 
-    std::println();
-    std::println("What will ({}) do? [HP {}/{}]", player_active->name(), player_active->current_hp(), player_active->max_hp());
-    std::println();
+    println();
+    println("What will ({}) do? [HP {}/{}]", player_active->name(), player_active->current_hp(), player_active->max_hp());
+    println();
 
-    std::println("ATTACK");
+    println("ATTACK");
     std::string moves_line;
     const Move *selected_move = nullptr;
     for(std::size_t i = 0; i < player_active->moves().size(); i++) {
@@ -127,13 +127,13 @@ void Game::render_frame() {
             moves_line += std::format("_{}_", move->info().name());
         }
     }
-    std::println("{}", moves_line);
+    println("{}", moves_line);
     if(selected_move) {
-        std::println("[{:<7}{}/{}]", type_to_string(selected_move->info().type()), selected_move->pp(), selected_move->info().pp());
+        println("[{:<7}{}/{}]", type_to_string(selected_move->info().type()), selected_move->pp(), selected_move->info().pp());
     }
-    std::println();
+    println();
 
-    std::println("SWITCH");
+    println("SWITCH");
     std::string switch_line;
     Pokemon *selected_switch_target = nullptr;
     std::size_t switch_slot = 0;
@@ -148,14 +148,14 @@ void Game::render_frame() {
         }
         switch_slot++;
     }
-    std::println("{}", switch_line);
+    println("{}", switch_line);
     if(selected_switch_target) {
-        std::println("[{}%]", hp_percent_of(*selected_switch_target));
+        println("[{}%]", hp_percent_of(*selected_switch_target));
     }
 }
 
 void Game::simulate_turn() {
-
+    // const auto player_selected_move = player_.get_active_pokemon()->moves()[selected_move_index_]
 }
 
 bool Game::game_over() {
