@@ -125,6 +125,8 @@ public:
     MoveUseResult use_random_move_for_sleep_talk(Pokemon &target, Player &user_player, Player &target_player);
 
     const std::array<std::unique_ptr<Move>, 4> &moves() const noexcept;
+    std::int32_t moves_count() const noexcept;
+
     std::int32_t atk_stage() const noexcept;
     std::int32_t def_stage() const noexcept;
     std::int32_t sp_atk_stage() const noexcept;

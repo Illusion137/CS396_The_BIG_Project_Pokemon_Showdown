@@ -159,6 +159,13 @@ MoveUseResult Pokemon::use_random_move_for_sleep_talk(Pokemon &target, Player &u
 }
 
 const std::array<std::unique_ptr<Move>, 4> &Pokemon::moves() const noexcept { return this->moves_; }
+std::int32_t Pokemon::moves_count() const noexcept {
+    std::int32_t count = 0;
+    for(const auto &move : this->moves()) {
+        if(move) count++;
+    }
+    return count;
+}
 std::int32_t Pokemon::atk_stage() const noexcept { return this->atk_plus_; }
 std::int32_t Pokemon::def_stage() const noexcept { return this->def_plus_; }
 std::int32_t Pokemon::sp_atk_stage() const noexcept { return this->sp_atk_plus_; }
