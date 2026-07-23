@@ -15,8 +15,8 @@ StatSpread::StatSpread(nlohmann::json j) {
 }
 
 std::int32_t calculate_stat_plus(const std::int32_t stat, const std::int32_t stat_plus) {
-    if(stat_plus > 0) return stat * (1.0 + (stat_plus * 0.5));
-    if(stat_plus < 0) return stat * (-1.0 - (stat_plus * 0.5));
+    if(stat_plus > 0) return stat * (2.0 + stat_plus) / 2.0;
+    if(stat_plus < 0) return stat * (2.0 / (2.0 - stat_plus));
     return stat;
 }
 std::int32_t calculate_stat_initial_pass(std::int32_t base_stat, std::int32_t stat_iv, std::int32_t stat_ev, std::int32_t level) {
