@@ -1,3 +1,6 @@
 # internal library for smogon_scraper
 lib-origin
 node_modules
+build
+.cache
+.tmp
