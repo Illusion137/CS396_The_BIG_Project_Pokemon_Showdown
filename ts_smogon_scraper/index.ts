@@ -197,7 +197,73 @@ const MOVE_OVERRIDES: Record<typeof pokemon_dump['moves'][number]['name'], MoveH
     "Spikes": ["effect"],
     "Dark Pulse": ["effect"],
     "Focus Blast": ["effect"],
-    "Struggle": ["effect"]
+    "Struggle": ["effect"],
+    "Will-O-Wisp": ["effect"],
+    "Acupressure": ["effect"],
+    "Agility": ["effect"],
+    "Amnesia": ["effect"],
+    "Autotomize": ["effect"],
+    "Barrier": ["effect"],
+    "Bulk Up": ["effect"],
+    "Coil": ["effect"],
+    "Cosmic Power": ["effect"],
+    "Cotton Guard": ["effect"],
+    "Defense Curl": ["effect"],
+    "Defend Order": ["effect"],
+    "Dragon Dance": ["effect"],
+    "Growth": ["effect"],
+    "Harden": ["effect"],
+    "Hone Claws": ["effect"],
+    "Howl": ["effect"],
+    "Iron Defense": ["effect"],
+    "Meditate": ["effect"],
+    "Nasty Plot": ["effect"],
+    "Quiver Dance": ["effect"],
+    "Rock Polish": ["effect"],
+    "Sharpen": ["effect"],
+    "Shell Smash": ["effect"],
+    "Shift Gear": ["effect"],
+    "Stockpile": ["effect"],
+    "Tail Glow": ["effect"],
+    "Withdraw": ["effect"],
+    "Work Up": ["effect"],
+    "Charm": ["effect"],
+    "Cotton Spore": ["effect"],
+    "Fake Tears": ["effect"],
+    "Feather Dance": ["effect"],
+    "Growl": ["effect"],
+    "Leer": ["effect"],
+    "Metal Sound": ["effect"],
+    "Scary Face": ["effect"],
+    "Screech": ["effect"],
+    "String Shot": ["effect"],
+    "Tail Whip": ["effect"],
+    "Tickle": ["effect"],
+    "Haze": ["effect"],
+    "Psych Up": ["effect"],
+    "Milk Drink": ["effect"],
+    "Moonlight": ["effect"],
+    "Morning Sun": ["effect"],
+    "Slack Off": ["effect"],
+    "Soft-Boiled": ["effect"],
+    "Synthesis": ["effect"],
+    "Heal Order": ["effect"],
+    "Heal Pulse": ["effect"],
+    "Belly Drum": ["effect"],
+    "Pain Split": ["effect"],
+    "Memento": ["effect"],
+    "Glare": ["effect"],
+    "Poison Powder": ["effect"],
+    "Poison Gas": ["effect"],
+    "Stun Spore": ["effect"],
+    "Thunder Wave": ["effect"],
+    "Grass Whistle": ["effect"],
+    "Sing": ["effect"],
+    "Hypnosis": ["effect"],
+    "Lovely Kiss": ["effect"],
+    "Sleep Powder": ["effect"],
+    "Dark Void": ["effect"],
+    "Psycho Shift": ["effect"],
 };
 
 function move_name_to_class_name(move_name: string){
@@ -360,9 +426,41 @@ ${pokemon_dump.pokemon.map(p => p.abilities.map(a => `has_ability('${esc(p.name)
     await fs().write_file_as_string("../prolog_validator/gen_db.pl", template, {encoding: "utf8"});
 }
 
+function populate_hidden_power() {
+    const hidden_power_types = [
+        "Bug",
+        "Dark",
+        "Dragon",
+        "Electric",
+        "Fighting",
+        "Fire",
+        "Flying",
+        "Ghost",
+        "Grass",
+        "Ground",
+        "Ice",
+        "Normal",
+        "Poison",
+        "Psychic",
+        "Rock",
+        "Steel",
+        "Water"
+    ]
+    const hidden_power = pokemon_dump.moves.find(m => m.name === "Hidden Power")!;
+    hidden_power_types.forEach(type => {
+        const new_hidden_power0 = {...hidden_power, name: `Hidden Power ${type}`, type};
+        const new_hidden_power1 = {...hidden_power, name: `Hidden Power [${type}]`, type};
+        pokemon_dump.moves.push(new_hidden_power0);
+        pokemon_dump.moves.push(new_hidden_power1);
+    });
+}
+
 async function main(){
     await load_native_fs();
     await populate_extracted_pokemon_data();
+
+    populate_hidden_power();
+
     await generate_pokemon_gen_cpp();
     await generate_move_gen_cpp();
     await generate_move_gen_h_and_cpp();

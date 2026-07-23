@@ -1251,6 +1251,40 @@ move('Spacial Rend').
 move('String Shot').
 move('Thunder Fang').
 move('V-create').
+move('Hidden Power Bug').
+move('Hidden Power [Bug]').
+move('Hidden Power Dark').
+move('Hidden Power [Dark]').
+move('Hidden Power Dragon').
+move('Hidden Power [Dragon]').
+move('Hidden Power Electric').
+move('Hidden Power [Electric]').
+move('Hidden Power Fighting').
+move('Hidden Power [Fighting]').
+move('Hidden Power Fire').
+move('Hidden Power [Fire]').
+move('Hidden Power Flying').
+move('Hidden Power [Flying]').
+move('Hidden Power Ghost').
+move('Hidden Power [Ghost]').
+move('Hidden Power Grass').
+move('Hidden Power [Grass]').
+move('Hidden Power Ground').
+move('Hidden Power [Ground]').
+move('Hidden Power Ice').
+move('Hidden Power [Ice]').
+move('Hidden Power Normal').
+move('Hidden Power [Normal]').
+move('Hidden Power Poison').
+move('Hidden Power [Poison]').
+move('Hidden Power Psychic').
+move('Hidden Power [Psychic]').
+move('Hidden Power Rock').
+move('Hidden Power [Rock]').
+move('Hidden Power Steel').
+move('Hidden Power [Steel]').
+move('Hidden Power Water').
+move('Hidden Power [Water]').
 
 % Item list
 item('Absorb Bulb').
