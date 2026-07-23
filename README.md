@@ -16,5 +16,5 @@ swipl ./prolog_validator/validator.pl -- ./.tmp/player.json ./.tmp/opponent.json
 ```bash
 cmake -S cpp_player -B cpp_player/build -G Ninja -DCMAKE_CXX_COMPILER=g++
 cmake --build cpp_player/build
-./cpp_player/build/Showdown_Player.exe
+./cpp_player/build/Showdown_Player.exe ./teams/player.showdown ./teams/opponent.showdown
 ```

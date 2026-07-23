@@ -1,6 +1,8 @@
 #include "Orchestrator.h"
 #include <array>
 #include <format>
+#include <fstream>
+#include <memory>
 #include <print>
 #include <stdexcept>
 
@@ -40,11 +42,33 @@ CommandResult execute_command(const std::string& command) {
     return {result_output, exit_code};
 }
 
-std::array<std::shared_ptr<Pokemon>, MAX_POKEMON_TEAM_SIZE> fetch_pokemon_teams(const std::string& player_showdown_path, const std::string& opponent_showdown_path) {
+std::pair<PokemonTeam, PokemonTeam> fetch_pokemon_teams(const std::string& player_showdown_path, const std::string& opponent_showdown_path) {
     const CommandResult parser_result = execute_command(std::format("racket ./scheme_parser/parser.rkt {} {}", player_showdown_path, opponent_showdown_path));
     if(parser_result.exit_code != 0) {
         std::print("[OUTPUT]: {}", parser_result.output);
         throw std::runtime_error(std::format("Failed to parse the showdown export files: [{}, {}]", player_showdown_path, opponent_showdown_path));
     }
-    const CommandResult validator_result = execute_command(std::format("racket ./scheme_parser/parser.rkt {} {}", player_showdown_path, opponent_showdown_path));
+
+    const char *validation_player_json_path = "./.tmp/player.json";
+    const char *validation_opponent_json_path = "./.tmp/opponent.json";
+
+    const CommandResult validator_result = execute_command(std::format("swipl ./prolog_validator/validator.pl -- {} {}", validation_player_json_path, validation_opponent_json_path));
+    if(validator_result.exit_code != 0) {
+        std::print("[OUTPUT]: {}", validator_result.output);
+        throw std::runtime_error(std::format("Failed to validate the showdown export files: [{}, {}]", validation_player_json_path, validation_opponent_json_path));
+    }
+
+    std::ifstream player_json_file(validation_player_json_path);
+    nlohmann::json player_json = nlohmann::json::parse(player_json_file);
+
+    std::ifstream opponent_json_file(validation_player_json_path);
+    nlohmann::json opponent_json = nlohmann::json::parse(opponent_json_file);
+
+    PokemonTeam player_team = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
+    PokemonTeam opponent_team = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
+
+    for(std::size_t i = 0; i < player_json.size(); i++) player_team[i] = std::make_unique<Pokemon>(player_json[i]);
+    for(std::size_t i = 0; i < opponent_json.size(); i++) opponent_team[i] = std::make_unique<Pokemon>(opponent_json[i]);
+
+    return { std::move(player_team), std::move(opponent_team) };
 }
