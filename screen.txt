@@ -1,16 +1,22 @@
-                Volbeat L75                
-                100% [====================]
+[TURN 10]       Volbeat L75                  [O O O]
+                100% [====================]  [O X _]
                 [1.5x Atk]
 Hawlucha L100
-[====================] 100%
-[PAR][2x Atk]
+[====================] 100% [O O X]
+[PAR][2x Atk]               [X _ _]
 
 What will (Hawlucha) do? [HP 250/250]
 
 ATTACK
-[Stone Edge] _High Jump Kick_ _Acrobatics_ _Swords Dance_
+[Stone Edge] _High Jump Kick_ _Acrobatics_ _Swords Dance_ 
 [Rock   8/8]
+(ULTRA/SUPER/EFFECTIVE/NOT-EFFECTIVE/ULTRA-NOT-EFFECTIVE/IMMUNE)
 
 SWITCH
 [Rotom] _Zorua_ _Gastrodon_ _Victini_ _Galade_
 [100%]
+
+[log]----------------
+Hawlucha used move [success].
+Volbeat used move [missed].
+--
