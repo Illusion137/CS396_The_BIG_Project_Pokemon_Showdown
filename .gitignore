@@ -3,4 +3,5 @@ lib-origin
 node_modules
 build
 .cache
-.tmp
+.tmp/player.json
+.tmp/opponent.json
