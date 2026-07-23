@@ -29,6 +29,7 @@ Ability: [ability]
 output: =======================================
 {
     "name": "Articuno",
+    "level": 100
     "item": "Leftovers",
     "ability": "Pressure",
     "evs": {"hp": 252, "atk": 0, "def": 0, "spa": 252, "spd": 4, "spe": 0}, ; Note that all unstated EVs are set to 0 by default
@@ -91,6 +92,18 @@ output: =======================================
     (when (= (length split) 2)
         (hash-set! data 'item (second split)))
 )
+(define (maybe-parse-levels-line line data)
+    (hash-set! data 'level 100)
+    (maybe-parse-else-false (not (string-prefix? line "Level: "))
+        (lambda ()
+            (when (not (in-range (strip-prefix line "Level: ") 1 100)) 
+                (fail "level must be between 1-100")
+            )
+            (hash-set! data 'level (string->number (strip-prefix line "Level: ")))
+            #t
+    ))
+)
+
 (define (parse-ability-line line data) 
     (fail-on-false-line line "unable to parse ability line")
     (when (not (string-prefix? line "Ability: ")) 
@@ -169,6 +182,9 @@ output: =======================================
 
     (parse-name-item-line (get-line index) pokemon-data)
     (set! index (add1 index))
+
+    (when (maybe-parse-levels-line (get-line index) pokemon-data) (set! index (add1 index)))
+
     (parse-ability-line (get-line index) pokemon-data)
     (set! index (add1 index))
 
