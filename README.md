@@ -3,7 +3,7 @@
 ## Requirements
 - Racket
 - Prolog
-- g++
+- g++ or other c++ compiler
 - CMake
 
 ## Usage Example (Individual)
@@ -28,3 +28,6 @@ cmake --build cpp_player/build
 ## How to play
 Use `WASD` to move around the `cursor` and press `ENTER` to select your action.
 Use `q` to exit the application.
+
+## Notes
+- This was tested both on a Windows machine and a OSX machine
