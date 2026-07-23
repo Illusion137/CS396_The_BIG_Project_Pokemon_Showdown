@@ -384,3 +384,27 @@ double type_on_type_multiplier(const Type attacker_type, const Type defender_typ
 double type_on_types_multiplier(const Type attacker_type, const std::pair<Type, Type> defender_types) {
     return type_on_type_multiplier(attacker_type, defender_types.first) * type_on_type_multiplier(attacker_type, defender_types.second);
 }
+
+const char *type_to_string(Type type) noexcept {
+    switch(type) {
+        case Type::NONE: return "None";
+        case Type::BUG: return "Bug";
+        case Type::DARK: return "Dark";
+        case Type::DRAGON: return "Dragon";
+        case Type::ELECTRIC: return "Electric";
+        case Type::FIGHTING: return "Fighting";
+        case Type::FIRE: return "Fire";
+        case Type::FLYING: return "Flying";
+        case Type::GHOST: return "Ghost";
+        case Type::GRASS: return "Grass";
+        case Type::GROUND: return "Ground";
+        case Type::ICE: return "Ice";
+        case Type::NORMAL: return "Normal";
+        case Type::POISON: return "Poison";
+        case Type::PSYCHIC: return "Psychic";
+        case Type::ROCK: return "Rock";
+        case Type::STEEL: return "Steel";
+        case Type::WATER: return "Water";
+    }
+    return "None";
+}

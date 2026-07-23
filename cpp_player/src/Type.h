@@ -24,5 +24,6 @@ enum class Type {
 };
 extern double type_on_type_multiplier(const Type attacker_type, const Type defender_type);
 extern double type_on_types_multiplier(const Type attacker_type, const std::pair<Type, Type> defender_types);
+extern const char *type_to_string(Type type) noexcept;
 
 #endif // TYPE_H
