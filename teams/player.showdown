@@ -1,53 +1,54 @@
 Tyranitar @ Choice Band
 Ability: Sand Stream
-EVs: 248 HP / 176 Atk / 76 SpD / 8 Spe
+EVs: 104 HP / 240 Atk / 40 SpD / 124 Spe
 Adamant Nature
-- Pursuit
 - Crunch
-- Low Kick
+- Pursuit
 - Stone Edge
+- Superpower
 
-Excadrill @ Air Balloon
-Ability: Sand Rush
-EVs: 252 Atk / 4 SpD / 252 Spe
-Adamant Nature
-- Earthquake
-- Iron Head
-- Swords Dance
-- Rapid Spin
-
-Landorus-Therian @ Choice Scarf
+Landorus-Therian @ Leftovers
 Ability: Intimidate
-EVs: 252 Atk / 4 Def / 252 Spe
-Jolly Nature
+EVs: 252 HP / 12 Atk / 228 Def / 8 SpA / 8 SpD
+Relaxed Nature
+IVs: 30 Atk / 30 Def / 30 Spe
 - Earthquake
-- Outrage
+- Superpower
 - U-turn
-- Stone Edge
+- Stealth Rock
 
-Arceus @ Meadow Plate
-Ability: Multitype
-EVs: 248 HP / 164 SpD / 96 Spe
-Timid Nature
-- Recover
-- Ice Beam
-- Grass Knot
-- Fire Blast
+Garchomp @ Dragon Gem
+Ability: Rough Skin
+EVs: 16 HP / 252 Atk / 240 Spe
+Adamant Nature
+- Outrage
+- Earthquake
+- Substitute
+- Swords Dance
 
-Latios @ Soul Dew
+Latios @ Choice Specs
 Ability: Levitate
+EVs: 4 HP / 252 SpA / 252 Spe
+Timid Nature
+IVs: 30 Atk / 30 Def
+- Draco Meteor
+- Psyshock
+- Surf
+- Hidden Power [Ice]
+
+Jirachi @ Choice Scarf
+Ability: Serene Grace
+EVs: 104 HP / 200 Atk / 56 SpD / 148 Spe
+Jolly Nature
+- Iron Head
+- U-turn
+- Ice Punch
+- Healing Wish
+
+Keldeo @ Fighting Gem
+Ability: Justified
 EVs: 4 Def / 252 SpA / 252 Spe
 Timid Nature
-- Draco Meteor
+- Hydro Pump
+- Secret Sword
 - Calm Mind
-- Roost
-- Psyshock
-
-Heatran @ Leftovers
-Ability: Flash Fire
-EVs: 248 HP / 8 Def / 252 SpD
-Calm Nature
-- Stealth Rock
-- Roar
-- Lava Plume
-- Toxic

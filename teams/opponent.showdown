@@ -1,55 +1,58 @@
-Tornadus-Therian @ Life Orb
-Ability: Regenerator
-EVs: 4 Atk / 252 SpA / 252 Spe
-Naive Nature
-- Taunt
-- Hurricane
-- Superpower
-- U-turn
-
-Kingdra @ Choice Specs
-Ability: Swift Swim
-EVs: 252 SpA / 4 SpD / 252 Spe
-Modest Nature
+Roremoide (Ninetales) (F) @ Leftovers
+Ability: Drought
+EVs: 252 HP / 136 SpD / 120 Spe
+Calm Nature
 IVs: 0 Atk
-- Draco Meteor
-- Hydro Pump
-- Surf
-- Dragon Pulse
-
-Kyogre @ Leftovers
-Ability: Drizzle
-EVs: 248 HP / 204 Def / 56 Spe
-Bold Nature
-- Rest
-- Scald
-- Sleep Talk
+- Flamethrower
+- Will-O-Wisp
+- Sunny Day
 - Roar
 
-Deoxys-Attack @ Focus Sash
-Ability: Pressure
+Rhynotam (Heatran) (M) @ Air Balloon
+Ability: Flash Fire
+EVs: 252 HP / 108 SpA / 132 SpD / 16 Spe
+Modest Nature
+IVs: 30 Atk / 30 Def
+- Magma Storm
+- Earth Power
+- Hidden Power [Ice]
+- Will-O-Wisp
+
+Dog (Dugtrio) (M) @ Focus Sash
+Ability: Arena Trap
 EVs: 252 Atk / 4 SpA / 252 Spe
 Hasty Nature
-- Spikes
-- Extreme Speed
-- Dark Pulse
-- Superpower
-
-Dialga @ Leftovers
-Ability: Pressure
-EVs: 248 HP / 56 SpA / 176 SpD / 28 Spe
-Calm Nature
-- Draco Meteor
-- Roar
+IVs: 0 HP / 0 Def / 0 SpD
+- Earthquake
+- Reversal
 - Stealth Rock
-- Fire Blast
+- Memento
 
-Arceus @ Spooky Plate
-Ability: Multitype
-EVs: 160 HP / 96 SpA / 252 Spe
+Ulgamoooth (Volcarona) (M) @ Sitrus Berry
+Ability: Flame Body
+EVs: 140 HP / 252 SpA / 116 Spe
+Modest Nature
+IVs: 30 Atk / 30 Def
+- Flamethrower
+- Giga Drain
+- Hidden Power [Ice]
+- Quiver Dance
+
+Dantopia (Venusaur) (M) @ Black Sludge
+Ability: Chlorophyll
+EVs: 76 HP / 252 SpA / 4 SpD / 176 Spe
 Timid Nature
-IVs: 0 Atk
-- Judgment
-- Calm Mind
-- Focus Blast
-- Recover
+IVs: 30 Atk / 30 Def
+- Giga Drain
+- Sludge Bomb
+- Hidden Power [Ice]
+- Sleep Powder
+
+Reepor (Donphan) (M) @ Leftovers
+Ability: Sturdy
+EVs: 252 HP / 8 Atk / 248 Def
+Impish Nature
+- Earthquake
+- Ice Shard
+- Rapid Spin
+- Stealth Rock
