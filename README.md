@@ -5,6 +5,7 @@
 - Prolog
 - g++ or other c++ compiler
 - CMake
+- ts-node (not for use but if you want to expand generation; everything generated comes prebuilt)
 
 ## Usage Example (Individual)
 ### Scheme Parser (Racket)
