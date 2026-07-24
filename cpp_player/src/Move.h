@@ -98,7 +98,9 @@ enum class MoveUseResult {
     IMMUNE,
     MISSED,
     FAILED,
-    CRITICAL
+    CRITICAL,
+    FLINCHED,
+    CONFUSED_SELF_HIT
 };
 
 class Move {
@@ -120,6 +122,7 @@ protected:
 };
 
 extern const MoveBase &switch_move_base() noexcept;
+extern const MoveBase &confusion_move_base() noexcept;
 
 class Move_Switch : public Move {
 public:

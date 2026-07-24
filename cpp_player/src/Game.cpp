@@ -148,6 +148,8 @@ const char *move_use_result_string(MoveUseResult result) noexcept {
         case MoveUseResult::MISSED: return "missed";
         case MoveUseResult::FAILED: return "failed";
         case MoveUseResult::CRITICAL: return "critical";
+        case MoveUseResult::FLINCHED: return "flinched";
+        case MoveUseResult::CONFUSED_SELF_HIT: return "hurt itself in confusion";
         default: return "";
     }
 }
@@ -159,6 +161,8 @@ const char *log_result_color(MoveUseResult result) noexcept {
         case MoveUseResult::IMMUNE: return ansi::CYAN;
         case MoveUseResult::FAILED: return ansi::RED;
         case MoveUseResult::CRITICAL: return ansi::MAGENTA;
+        case MoveUseResult::FLINCHED: return ansi::YELLOW;
+        case MoveUseResult::CONFUSED_SELF_HIT: return ansi::RED;
         default: return ansi::RESET;
     }
 }
@@ -418,6 +422,9 @@ void Game::simulate_turn(Move &player_action) {
 }
 
 void Game::resolve_post_turn_switches() {
+    // roost exists until the turn ends; so since this happens after turn good place to put it I guess, but could also be done polymorphically if I wanted to do more restructuring
+    this->player_.get_active_pokemon()->remove_volatile_status(VolitileStatusCondition::ROOST);
+    this->opponent_.get_active_pokemon()->remove_volatile_status(VolitileStatusCondition::ROOST);
     if(this->opponent_.consume_pending_switch() || !this->opponent_.get_active_pokemon()->alive()) {
         Pokemon *before = this->opponent_.get_active_pokemon().get();
         this->opponent_.force_random_switch();
@@ -470,8 +477,11 @@ void Game::start() {
             else {
                 Pokemon *target = player_.get_switch_target(selected_switch_index_);
                 if(target && target->alive()) {
+                    Pokemon *outgoing = player_.get_active_pokemon().get();
+                    outgoing->add_volatile_status(std::make_unique<Status_SwitchingOut>());
                     Move_Switch switch_action(target);
                     simulate_turn(switch_action);
+                    outgoing->remove_volatile_status(VolitileStatusCondition::SWITCHING_OUT);
                     this->resolve_post_turn_switches();
                     this->log_turn_divider();
                     this->turn_++;

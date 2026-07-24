@@ -1,6 +1,8 @@
 #include "Pokemon.h"
+#include "Utils.h"
 #include "gen/MoveGen.h"
 #include <algorithm>
+#include <cmath>
 #include <cstdlib>
 #include <memory>
 #include <vector>
@@ -58,7 +60,12 @@ std::int32_t Pokemon::speed() const noexcept {
 }
 
 TypePair Pokemon::types() const noexcept {
-    return this->base_pokemon_.base_type();
+    TypePair types = this->base_pokemon_.base_type();
+    if(this->has_volatile_status(VolitileStatusCondition::ROOST)) {
+        if(types.first == Type::FLYING) types.first = Type::NONE;
+        if(types.second == Type::FLYING) types.second = Type::NONE;
+    }
+    return types;
 }
 
 bool Pokemon::has_available_moves() const noexcept {
@@ -149,6 +156,32 @@ std::int32_t Pokemon::consume_lock_turn(std::int32_t min_turns, std::int32_t max
         return 0;
     }
     return lock->turns_remaining();
+}
+
+bool Pokemon::consume_flinch() noexcept {
+    if(!this->has_volatile_status(VolitileStatusCondition::FLINCH)) return false;
+    this->remove_volatile_status(VolitileStatusCondition::FLINCH);
+    return true;
+}
+
+bool Pokemon::tick_taunt() noexcept {
+    VolitileStatus *taunt = this->get_volatile_status(VolitileStatusCondition::TAUNT);
+    if(!taunt) return false;
+    if(static_cast<TurnStatus*>(taunt)->tick()) {
+        this->remove_volatile_status(VolitileStatusCondition::TAUNT);
+        return false;
+    }
+    return true;
+}
+
+bool Pokemon::tick_confusion_and_check_self_hit() noexcept {
+    VolitileStatus *confusion = this->get_volatile_status(VolitileStatusCondition::CONFUSION);
+    if(!confusion) return false;
+    if(static_cast<TurnStatus*>(confusion)->tick()) {
+        this->remove_volatile_status(VolitileStatusCondition::CONFUSION);
+        return false;
+    }
+    return chance_of(33);
 }
 
 MoveUseResult Pokemon::use_random_move_for_sleep_talk(Pokemon &target, Player &user_player, Player &target_player) {

@@ -88,8 +88,9 @@ private:
     std::int32_t turns_remaining_;
 };
 
-class Status_Confusion : public VolitileStatus {
+class Status_Confusion : public TurnStatus {
 public:
+    Status_Confusion() noexcept : TurnStatus(2 + std::rand() % 4) {}
     VolitileStatusCondition condition() const noexcept override { return VolitileStatusCondition::CONFUSION; }
 };
 class Status_Flinch : public VolitileStatus {

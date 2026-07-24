@@ -121,6 +121,9 @@ public:
     void clear_volatile_statuses() noexcept;
 
     std::int32_t consume_lock_turn(std::int32_t min_turns, std::int32_t max_turns) noexcept;
+    bool consume_flinch() noexcept;
+    bool tick_taunt() noexcept;
+    bool tick_confusion_and_check_self_hit() noexcept;
 
     MoveUseResult use_random_move_for_sleep_talk(Pokemon &target, Player &user_player, Player &target_player);
 

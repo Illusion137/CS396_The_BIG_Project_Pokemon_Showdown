@@ -31,10 +31,25 @@ void Move_Switch::effect(Pokemon &user, Pokemon &target, Player &user_player, Pl
     user_player.switch_to(this->switch_target_);
 }
 
+const MoveBase &confusion_move_base() noexcept {
+    static const MoveBase base("Confusion", "Hurts the confused user.", MoveCategory::PHYSICAL, 1, 40, 0, 0, MoveTarget::NORMAL, Type::NONE, {});
+    return base;
+}
+
 MoveUseResult Move::use(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player, bool ignore_status) noexcept {
     if(!user.alive()) return MoveUseResult::FAILED;
     const bool skip_status_force_sleep_talk = ignore_status || dynamic_cast<const Move_SleepTalk*>(this) != nullptr || dynamic_cast<const Move_Switch*>(this) != nullptr;
-    if(!skip_status_force_sleep_talk && user.status_blocks_move()) return MoveUseResult::FAILED;
+    if(!skip_status_force_sleep_talk) {
+        if(user.status_blocks_move()) return MoveUseResult::FAILED;
+        if(user.consume_flinch()) return MoveUseResult::FLINCHED;
+        const bool still_taunted = user.tick_taunt();
+        if(still_taunted && this->move_info_.category() == MoveCategory::NON_DAMAGING) return MoveUseResult::FAILED;
+        if(user.tick_confusion_and_check_self_hit()) {
+            Move confusion_hit(confusion_move_base());
+            confusion_hit.use(user, user, user_player, user_player, true);
+            return MoveUseResult::CONFUSED_SELF_HIT;
+        }
+    }
     this->pp_--;
     if(this->move_info_.accuracy()) {
         if(!chance_of(this->move_info_.accuracy())) return MoveUseResult::MISSED;
