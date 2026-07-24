@@ -8,16 +8,16 @@
 #include <cstdlib>
 #include <memory>
 
-std::int32_t Move::defending_stat(const Pokemon &target) const noexcept {
-    return this->move_info_.category() == MoveCategory::PHYSICAL ? target.defense() : target.sp_def();
+std::int32_t Move::defending_stat(const Pokemon &target, bool critical) const noexcept {
+    return this->move_info_.category() == MoveCategory::PHYSICAL ? target.defense(critical) : target.sp_def(critical);
 }
 
-std::int32_t Move::get_damage(const Pokemon &user, const Pokemon &target) const noexcept {
+std::int32_t Move::get_damage(const Pokemon &user, const Pokemon &target, bool critical) const noexcept {
     if(this->move_info_.category() == MoveCategory::NON_DAMAGING) return 0;
     const std::int32_t level_part = std::floor(((2.0 * user.level()) / 5.0) + 2.0);
     const double attacking_stat = this->move_info_.category() == MoveCategory::PHYSICAL ? user.attack() : user.sp_atk();
     constexpr std::int32_t min_damage = 2;
-    const std::int32_t base_damage = std::floor((level_part * this->power(user, target) * attacking_stat / this->defending_stat(target)) / 50.0) + min_damage;
+    const std::int32_t base_damage = std::floor((level_part * this->power(user, target) * attacking_stat / this->defending_stat(target, critical)) / 50.0) + min_damage;
     const double stab = user.types().first == this->move_info_.type() || user.types().second == this->move_info_.type() ? 1.5 : 1.0;
     const double rng = 0.85 + (double)rand() / RAND_MAX * (1.00 - 0.85);
     return (double)base_damage * stab * rng;
@@ -39,6 +39,9 @@ MoveUseResult Move::use(Pokemon &user, Pokemon &target, Player &user_player, Pla
     if(this->move_info_.accuracy()) {
         if(!chance_of(this->move_info_.accuracy())) return MoveUseResult::MISSED;
     }
+    constexpr std::int32_t CRITICAL_HIT_CHANCE_PERCENT = 4;
+    const bool critical = chance_of(CRITICAL_HIT_CHANCE_PERCENT);
+    bool damaging = false;
     switch(this->move_info_.target()) {
         case ADJACENT_ALLY_OR_SELF:
         case ADJACENT_ALLY:
@@ -57,14 +60,15 @@ MoveUseResult Move::use(Pokemon &user, Pokemon &target, Player &user_player, Pla
         case NORMAL: {
             const double multiplier = type_on_types_multiplier(this->move_info_.type(), target.types());
             if(multiplier == 0.0) return MoveUseResult::IMMUNE;
-            const std::int32_t damage = get_damage(user, target);
+            const std::int32_t damage = get_damage(user, target, critical);
+            damaging = true;
             target.take_damage(damage);
             break;
         }
         case SCRIPTED: break;
     }
     this->effect(user, target, user_player, target_player);
-    return MoveUseResult::SUCCESSFUL;
+    return damaging && critical ? MoveUseResult::CRITICAL : MoveUseResult::SUCCESSFUL;
 }
 
 
@@ -94,7 +98,7 @@ std::int32_t Move_Pursuit::power(const Pokemon &user, const Pokemon &target) con
 std::int32_t Move_Pursuit::effective_priority(const Pokemon &user, const Pokemon &target) const noexcept {
     return target.has_volatile_status(VolitileStatusCondition::SWITCHING_OUT) ? SWITCH_ACTION_PRIORITY + 1 : this->info().priority();
 }
-std::int32_t Move_Psyshock::defending_stat(const Pokemon &target) const noexcept {
+std::int32_t Move_Psyshock::defending_stat(const Pokemon &target, bool critical) const noexcept {
     return target.defense();
 }
 

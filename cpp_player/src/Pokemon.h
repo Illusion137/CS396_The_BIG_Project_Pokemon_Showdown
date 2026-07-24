@@ -94,9 +94,9 @@ public:
 
     std::int32_t level() const noexcept;
     std::int32_t attack() const noexcept;
-    std::int32_t defense() const noexcept;
+    std::int32_t defense(bool critical = false) const noexcept;
     std::int32_t sp_atk() const noexcept;
-    std::int32_t sp_def() const noexcept;
+    std::int32_t sp_def(bool critical = false) const noexcept;
     std::int32_t speed() const noexcept;
 
     TypePair types() const noexcept;

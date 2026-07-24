@@ -14,7 +14,8 @@ StatSpread::StatSpread(nlohmann::json j) {
     this->speed = j.at("spe").get<std::int32_t>();
 }
 
-std::int32_t calculate_stat_plus(const std::int32_t stat, const std::int32_t stat_plus) {
+std::int32_t calculate_stat_plus(const std::int32_t stat, const std::int32_t stat_plus, bool critical = false) {
+    if(critical) return stat;
     if(stat_plus > 0) return stat * (2.0 + stat_plus) / 2.0;
     if(stat_plus < 0) return stat * (2.0 / (2.0 - stat_plus));
     return stat;
@@ -41,14 +42,14 @@ std::int32_t Pokemon::attack() const noexcept {
     if(this->status_condition() == NonVolitileStatusCondition::BURN) return stat * 0.5;
     return stat;
 }
-std::int32_t Pokemon::defense() const noexcept {
-    return calculate_stat_plus(calculate_stat(this->base_pokemon_.defense(), this->ivs_.defense, this->evs_.defense, this->level(), this->nature_, NATURE_DEF_MASK), this->def_plus_);
+std::int32_t Pokemon::defense(bool critical) const noexcept {
+    return calculate_stat_plus(calculate_stat(this->base_pokemon_.defense(), this->ivs_.defense, this->evs_.defense, this->level(), this->nature_, NATURE_DEF_MASK), this->def_plus_, critical);
 }
 std::int32_t Pokemon::sp_atk() const noexcept {
     return calculate_stat_plus(calculate_stat(this->base_pokemon_.sp_atk(), this->ivs_.sp_atk, this->evs_.sp_atk, this->level(), this->nature_, NATURE_SP_ATK_MASK), this->sp_atk_plus_);
 }
-std::int32_t Pokemon::sp_def() const noexcept {
-    return calculate_stat_plus(calculate_stat(this->base_pokemon_.sp_def(), this->ivs_.sp_def, this->evs_.sp_def, this->level(), this->nature_, NATURE_SP_DEF_MASK), this->sp_def_plus_);
+std::int32_t Pokemon::sp_def(bool critical) const noexcept {
+    return calculate_stat_plus(calculate_stat(this->base_pokemon_.sp_def(), this->ivs_.sp_def, this->evs_.sp_def, this->level(), this->nature_, NATURE_SP_DEF_MASK), this->sp_def_plus_, critical);
 }
 std::int32_t Pokemon::speed() const noexcept {
     const std::int32_t stat = calculate_stat_plus(calculate_stat(this->base_pokemon_.speed(), this->ivs_.speed, this->evs_.speed, this->level(), this->nature_, NATURE_SPEED_MASK), this->speed_plus_);

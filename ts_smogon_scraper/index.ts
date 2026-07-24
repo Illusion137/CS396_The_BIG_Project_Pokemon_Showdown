@@ -277,7 +277,7 @@ function move_hook_to_cpp_override(hook: MoveHook){
     switch(hook){
         case "effect": return "void effect(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player) override;";
         case "power": return "std::int32_t power(const Pokemon &user, const Pokemon &target) const noexcept override;";
-        case "defending_stat": return "std::int32_t defending_stat(const Pokemon &target) const noexcept override;";
+        case "defending_stat": return "std::int32_t defending_stat(const Pokemon &target, bool critical) const noexcept override;";
         case "effective_priority": return "std::int32_t effective_priority(const Pokemon &user, const Pokemon &target) const noexcept override;";
     }
 }

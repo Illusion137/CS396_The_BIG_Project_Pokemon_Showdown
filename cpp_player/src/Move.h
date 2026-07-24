@@ -97,7 +97,8 @@ enum class MoveUseResult {
     SUCCESSFUL,
     IMMUNE,
     MISSED,
-    FAILED
+    FAILED,
+    CRITICAL
 };
 
 class Move {
@@ -106,13 +107,13 @@ public:
     virtual ~Move() = default;
     const MoveBase &info() const noexcept { return this->move_info_; }
     std::int32_t pp() const noexcept { return this->pp_; }
-    std::int32_t get_damage(const Pokemon &user, const Pokemon &target) const noexcept;
+    std::int32_t get_damage(const Pokemon &user, const Pokemon &target, bool critical) const noexcept;
     std::int32_t priority(const Pokemon &user, const Pokemon &target) const noexcept { return this->effective_priority(user, target); }
     MoveUseResult use(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player, bool ignore_status = false) noexcept;
 protected:
     virtual void effect(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player) {}
     virtual std::int32_t power(const Pokemon &user, const Pokemon &target) const noexcept { return this->move_info_.power(); }
-    virtual std::int32_t defending_stat(const Pokemon &target) const noexcept;
+    virtual std::int32_t defending_stat(const Pokemon &target, bool critical) const noexcept;
     virtual std::int32_t effective_priority(const Pokemon &user, const Pokemon &target) const noexcept { return this->move_info_.priority(); }
     const MoveBase &move_info_;
     std::int32_t pp_;

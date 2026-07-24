@@ -9,7 +9,7 @@ class Move_AcidArmor : public Move { public: using Move::Move; void effect(Pokem
 class Move_LowKick : public Move { public: using Move::Move; std::int32_t power(const Pokemon &user, const Pokemon &target) const noexcept override; };
 class Move_GrassKnot : public Move { public: using Move::Move; std::int32_t power(const Pokemon &user, const Pokemon &target) const noexcept override; };
 class Move_Pursuit : public Move { public: using Move::Move; std::int32_t power(const Pokemon &user, const Pokemon &target) const noexcept override; std::int32_t effective_priority(const Pokemon &user, const Pokemon &target) const noexcept override; };
-class Move_Psyshock : public Move { public: using Move::Move; std::int32_t defending_stat(const Pokemon &target) const noexcept override; };
+class Move_Psyshock : public Move { public: using Move::Move; std::int32_t defending_stat(const Pokemon &target, bool critical) const noexcept override; };
 class Move_Crunch : public Move { public: using Move::Move; void effect(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player) override; };
 class Move_IronHead : public Move { public: using Move::Move; void effect(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player) override; };
 class Move_SwordsDance : public Move { public: using Move::Move; void effect(Pokemon &user, Pokemon &target, Player &user_player, Player &target_player) override; };
