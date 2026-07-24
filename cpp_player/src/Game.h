@@ -4,6 +4,8 @@
 #include "Orchestrator.h"
 #include "Side.h"
 #include <memory>
+#include <string>
+#include <vector>
 
 class Player {
 public:
@@ -28,7 +30,11 @@ public:
     }
 
     void force_random_switch() noexcept;
+    bool switch_to(Pokemon *target) noexcept;
+    Pokemon *get_switch_target(std::int32_t slot_index) noexcept;
 private:
+    void apply_hazard_damage() noexcept;
+
     PokemonTeam team_;
     std::int32_t active_pokemon_index_;
     Side side_;
@@ -36,7 +42,7 @@ private:
 };
 
 struct Menu {
-    
+
 };
 
 class Game {
@@ -45,7 +51,13 @@ public:
     void start();
 private:
     void render_frame();
-    void simulate_turn();
+    void simulate_turn(Move &player_action);
+    void resolve_post_turn_switches();
+    void log_move(const Pokemon &actor, const Move &move, MoveUseResult result);
+    void log_faint_maybe(const Pokemon &pokemon);
+    void log_switch_in(const Pokemon &pokemon);
+    void log_turn_divider();
+    void push_log(std::string entry);
 
     bool game_over();
     Player player_;
@@ -55,6 +67,10 @@ private:
     std::int32_t selected_move_index_ = 0;
     std::int32_t selected_switch_index_ = 0;
     bool on_move_line_ = true;
+    bool must_switch_ = false;
+
+    std::int32_t turn_ = 1;
+    std::vector<std::string> log_;
 };
 
 #endif // GAME_H
