@@ -45,7 +45,7 @@ CommandResult execute_command(const std::string& command) {
 std::pair<PokemonTeam, PokemonTeam> fetch_pokemon_teams(const std::string& player_showdown_path, const std::string& opponent_showdown_path) {
     const CommandResult parser_result = execute_command(std::format("racket ./scheme_parser/parser.rkt {} {}", player_showdown_path, opponent_showdown_path));
     if(parser_result.exit_code != 0) {
-        print("[OUTPUT]: {}", parser_result.output);
+        ll::print("[OUTPUT]: {}", parser_result.output);
         throw std::runtime_error(std::format("Failed to parse the showdown export files: [{}, {}]", player_showdown_path, opponent_showdown_path));
     }
 
@@ -54,7 +54,7 @@ std::pair<PokemonTeam, PokemonTeam> fetch_pokemon_teams(const std::string& playe
 
     const CommandResult validator_result = execute_command(std::format("swipl ./prolog_validator/validator.pl -- {} {}", validation_player_json_path, validation_opponent_json_path));
     if(validator_result.exit_code != 0) {
-        print("[OUTPUT]: {}", validator_result.output);
+        ll::print("[OUTPUT]: {}", validator_result.output);
         throw std::runtime_error(std::format("Failed to validate the showdown export files: [{}, {}]", validation_player_json_path, validation_opponent_json_path));
     }
 

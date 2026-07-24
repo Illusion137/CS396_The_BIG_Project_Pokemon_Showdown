@@ -8,7 +8,7 @@
 std::int32_t main(std::int32_t argc, char **argv) {
     std::srand(static_cast<unsigned>(std::time(nullptr)));
     if(argc != 3) { // 3 because of the default first arg
-        println("Expected 2 input args: -- player_file.showdown opponent_file.showdown");
+        ll::println("Expected 2 input args: -- player_file.showdown opponent_file.showdown");
         return EXIT_FAILURE;
     }
     auto [player_team, opponent_team] = fetch_pokemon_teams(argv[1], argv[2]);

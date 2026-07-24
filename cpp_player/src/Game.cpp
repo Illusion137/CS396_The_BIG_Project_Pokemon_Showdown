@@ -275,24 +275,24 @@ void Game::render_frame() {
     const std::string opponent_hp_plain = std::format("{}% [{}]", opponent_hp_percent, render_hp_bar(opponent_hp_percent));
     const std::string opponent_hp_field = colorize(hp_bar_color(opponent_hp_percent), pad_visible(opponent_hp_plain, RIGHT_FIELD_WIDTH));
     const RenderedField opponent_boosts = render_status_and_boosts(*opponent_active);
-    println("{:<{}}{:<{}}  {}", turn_string, LEFT_WIDTH, opponent_header, RIGHT_FIELD_WIDTH, team_status_row(opponent_status, 0));
-    println("{:>{}}{}  {}", "", LEFT_WIDTH, opponent_hp_field, team_status_row(opponent_status, 1));
-    println("{:>{}}{}", "", LEFT_WIDTH, opponent_boosts.line);
+    ll::println("{:<{}}{:<{}}  {}", turn_string, LEFT_WIDTH, opponent_header, RIGHT_FIELD_WIDTH, team_status_row(opponent_status, 0));
+    ll::println("{:>{}}{}  {}", "", LEFT_WIDTH, opponent_hp_field, team_status_row(opponent_status, 1));
+    ll::println("{:>{}}{}", "", LEFT_WIDTH, opponent_boosts.line);
 
     const std::int32_t player_hp_percent = hp_percent_of(*player_active);
     const std::string player_hp_plain = std::format("[{}] {}%", render_hp_bar(player_hp_percent), player_hp_percent);
     const std::string player_hp_field = colorize(hp_bar_color(player_hp_percent), pad_visible(player_hp_plain, RIGHT_FIELD_WIDTH));
     const RenderedField player_boosts = render_status_and_boosts(*player_active);
     const std::string player_boosts_field = player_boosts.line + std::string(std::max(0, RIGHT_FIELD_WIDTH - player_boosts.visible_width), ' ');
-    println("{} L{}", player_active->name(), player_active->level());
-    println("{} {}", player_hp_field, team_status_row(player_status, 0));
-    println("{} {}", player_boosts_field, team_status_row(player_status, 1));
+    ll::println("{} L{}", player_active->name(), player_active->level());
+    ll::println("{} {}", player_hp_field, team_status_row(player_status, 0));
+    ll::println("{} {}", player_boosts_field, team_status_row(player_status, 1));
 
-    println();
-    println("What will ({}) do? [HP {}/{}]", player_active->name(), player_active->current_hp(), player_active->max_hp());
-    println();
+    ll::println();
+    ll::println("What will ({}) do? [HP {}/{}]", player_active->name(), player_active->current_hp(), player_active->max_hp());
+    ll::println();
 
-    println("ATTACK");
+    ll::println("ATTACK");
     const std::string highlight_color = std::string(ansi::BOLD) + ansi::CYAN;
     std::string moves_line;
     const Move *selected_move = nullptr;
@@ -307,18 +307,18 @@ void Game::render_frame() {
             moves_line += colorize(ansi::DIM, std::format("_{}_", move->info().name()));
         }
     }
-    println("{}", moves_line);
+    ll::println("{}", moves_line);
     if(selected_move) {
         const std::string pp_text = colorize(pp_color(selected_move->pp(), selected_move->info().pp()), std::format("{}/{}", selected_move->pp(), selected_move->info().pp()));
-        println("[{:<7}{}]", type_to_string(selected_move->info().type()), pp_text);
+        ll::println("[{:<7}{}]", type_to_string(selected_move->info().type()), pp_text);
         if(selected_move->info().category() != MoveCategory::NON_DAMAGING) {
             const double multiplier = type_on_types_multiplier(selected_move->info().type(), opponent_active->types());
-            println("{}", colorize(effectiveness_color(multiplier), effectiveness_string(multiplier)));
+            ll::println("{}", colorize(effectiveness_color(multiplier), effectiveness_string(multiplier)));
         }
     }
-    println();
+    ll::println();
 
-    println("SWITCH");
+    ll::println("SWITCH");
     std::string switch_line;
     std::int32_t switch_slot = 0;
     for(auto &teammate : this->player_.get_team()) {
@@ -331,15 +331,15 @@ void Game::render_frame() {
         }
         switch_slot++;
     }
-    println("{}", switch_line);
+    ll::println("{}", switch_line);
     if(Pokemon *selected_switch_target = this->player_.get_switch_target(selected_switch_index_)) {
         const std::int32_t switch_hp_percent = hp_percent_of(*selected_switch_target);
-        println("[{}]", colorize(hp_bar_color(switch_hp_percent), std::format("{}%", switch_hp_percent)));
+        ll::println("[{}]", colorize(hp_bar_color(switch_hp_percent), std::format("{}%", switch_hp_percent)));
     }
 
-    println();
-    println("[log]----------------");
-    for(auto it = this->log_.crbegin(); it != this->log_.crend(); it++) println("{}", it->data());
+    ll::println();
+    ll::println("[log]----------------");
+    for(auto it = this->log_.crbegin(); it != this->log_.crend(); it++) ll::println("{}", it->data());
 }
 
 void Game::log_move(const Pokemon &actor, const Move &move, MoveUseResult result) {
