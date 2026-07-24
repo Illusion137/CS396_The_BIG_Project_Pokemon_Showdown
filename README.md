@@ -32,4 +32,4 @@ Use `WASD` to move around the `cursor` and press `ENTER` to select your action.
 Use `q` to exit the application.
 
 ## Notes
-- This was tested both on a Windows machine and a Linux machine
+- This was tested on a Windows, Linux, and MacOS machines
