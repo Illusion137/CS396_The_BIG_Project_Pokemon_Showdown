@@ -19,10 +19,15 @@ void print(const std::string &fmt, Args&&... args) {
     std::cout << std::vformat(fmt, std::make_format_args(args...));
 }
 #elif
+// I thought I might need this to be different for linux so idek; potential useless #elif
 inline void println() { std::cout << '\n'; }
 template<typename... Args>
 void println(const std::string &fmt, Args&&... args) {
-    std::println(fmt, args);
+    std::cout << std::vformat(fmt, std::make_format_args(args...)) << '\n';
+}
+template<typename... Args>
+void print(const std::string &fmt, Args&&... args) {
+    std::cout << std::vformat(fmt, std::make_format_args(args...));
 }
 #endif
 
